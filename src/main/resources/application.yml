@@ -16,6 +16,10 @@ spring:
       password: root@root
       database: 0
 
+  cache:
+    redis:
+      time-to-live: 1800000
+
 
 mybatis-plus:
   configuration:

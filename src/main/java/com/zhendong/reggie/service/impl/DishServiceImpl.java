@@ -14,12 +14,14 @@ import com.zhendong.reggie.service.DishService;
 import com.zhendong.reggie.service.SetmealDishService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +32,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     @Autowired
     private SetmealDishService setmealDishService;
+
     @Override
     @Transactional
     public void saveWithFlavor(DishDto dishDto) {
@@ -99,6 +102,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         LambdaQueryWrapper<DishFlavor> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(DishFlavor::getDishId,ids);
         dishFlavorService.remove(lambdaQueryWrapper);
+
+        //清理所有菜品的缓存数据
 
 
     }
